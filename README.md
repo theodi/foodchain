@@ -1,31 +1,8 @@
+[![Dependency Status](http://img.shields.io/gemnasium/theodi/foodchain.svg)](https://gemnasium.com/theodi/foodchain)
+[![Coverage Status](http://img.shields.io/coveralls/theodi/foodchain.svg)](https://coveralls.io/r/theodi/foodchain)
+[![Code Climate](http://img.shields.io/codeclimate/github/theodi/foodchain.svg)](https://codeclimate.com/github/theodi/foodchain)
+[![Gem Version](http://img.shields.io/gem/v/foodchain.svg)](https://rubygems.org/gems/foodchain)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://theodi.mit-license.org)
+[![Badges](http://img.shields.io/:badges-6/6-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
+
 # Foodchain
-
-TODO: Write a gem description
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'foodchain'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install foodchain
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/foodchain/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
