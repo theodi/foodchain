@@ -1,0 +1,6 @@
+asset: odi-coin
+rpc:
+  user: multichainrpc
+  password: passsword
+  host: localhost
+  port: 2898
