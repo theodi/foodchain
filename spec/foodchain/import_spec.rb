@@ -15,15 +15,13 @@ module Foodchain
       end
 
       it 'gets all inspections' do
-        allow(described_class).to receive(:total) { 5 }
-
         stub = stub_request(:get, /http:\/\/api.ratings.food.gov.uk\/Establishments\/basic\/[0-9]+\/1000/).
           with(headers: {'Content-Type' => 'application/json', 'x-api-version' => '2'}).
-          to_return(body: '{"establishments": [{"FHRSID": 1, "RatingDate": "2016-01-01", "RatingValue": 5}]}')
+          to_return(body: '{"establishments": [{"FHRSID": 1, "RatingDate": "2016-01-01", "RatingValue": 5}], "meta": {"totalPages": 5}}')
 
         inspections = described_class.inspections
 
-        expect(WebMock::RequestRegistry.instance.times_executed(stub.request_pattern)).to eq(5)
+        expect(WebMock::RequestRegistry.instance.times_executed(stub.request_pattern)).to eq(6) # 5 times, plus in initial hit for metadata
         expect(inspections).to eq([
           {
             id: 1,
