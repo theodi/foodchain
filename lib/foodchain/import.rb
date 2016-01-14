@@ -5,8 +5,8 @@ module Foodchain
       extend Foodchain::Helpers
 
       def self.all recipient
-        inspections.each do |i|
-          send_inspection(recipient, i)
+        (1..total).each do |n|
+          inspections(n).each { |i| send_inspection(recipient, i) }
         end
       end
 
@@ -25,22 +25,19 @@ module Foodchain
         @@client ||= Multichain::Client.new
       end
 
-      def self.inspections
-        all_inspections = []
+      def self.inspections(page)
+        puts "Importing page #{page}"
+        inspections = get(template % {page: page})
 
-        (1..total).each do |i|
-          inspections = get(template % {page: i})
-
-          inspections['establishments'].each do |e|
-            all_inspections << {
-              id: e['FHRSID'],
-              date: e['RatingDate'],
-              rating: e['RatingValue']
-            }
-          end
+        inspections['establishments'].map do |e|
+          {
+            id: e['FHRSID'],
+            date: e['RatingDate'],
+            rating: e['RatingValue']
+          }
         end
 
-        all_inspections
+        inspections['establishments']
       end
 
       def self.template
