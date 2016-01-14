@@ -1,5 +1,6 @@
 require "httparty"
 require "multichain"
+require "securerandom"
 
 require "foodchain/helpers"
 require "foodchain/import"
