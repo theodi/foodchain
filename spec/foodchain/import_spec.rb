@@ -14,40 +14,16 @@ module Foodchain
         expect(described_class.get('http://www.example.com')['foo']).to eq('bar')
       end
 
-      it 'gets all inspections' do
+      it 'gets an inspection page' do
         stub = stub_request(:get, /http:\/\/api.ratings.food.gov.uk\/Establishments\/basic\/[0-9]+\/1000/).
           with(headers: {'Content-Type' => 'application/json', 'x-api-version' => '2'}).
           to_return(body: '{"establishments": [{"FHRSID": 1, "RatingDate": "2016-01-01", "RatingValue": 5}], "meta": {"totalPages": 5}}')
 
-        inspections = described_class.inspections
+        inspections = described_class.inspections(1)
 
-        expect(WebMock::RequestRegistry.instance.times_executed(stub.request_pattern)).to eq(6) # 5 times, plus in initial hit for metadata
+        expect(WebMock::RequestRegistry.instance.times_executed(stub.request_pattern)).to eq(1) # 5 times, plus in initial hit for metadata
         expect(inspections).to eq([
-          {
-            id: 1,
-            date: "2016-01-01",
-            rating: 5
-          },
-          {
-            id: 1,
-            date: "2016-01-01",
-            rating: 5
-          },
-          {
-            id: 1,
-            date: "2016-01-01",
-            rating: 5
-          },
-          {
-            id: 1,
-            date: "2016-01-01",
-            rating: 5
-          },
-          {
-            id: 1,
-            date: "2016-01-01",
-            rating: 5
-          }
+          {"FHRSID"=>1, "RatingDate"=>"2016-01-01", "RatingValue"=>5}
         ])
       end
 
@@ -93,8 +69,9 @@ module Foodchain
           rating: 5
         }
 
-        expect(described_class).to receive(:inspections) { inspections }
-        expect_any_instance_of(Multichain::Client).to receive(:send_asset_with_data).exactly(4).times
+        allow(described_class).to receive(:total) { 2 }
+        allow(described_class).to receive(:inspections) { inspections }
+        expect_any_instance_of(Multichain::Client).to receive(:send_asset_with_data).exactly(8).times
 
         described_class.all('foo')
       end
